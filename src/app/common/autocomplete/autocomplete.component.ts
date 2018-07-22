@@ -2,6 +2,7 @@ import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-autocomplete',
@@ -11,20 +12,20 @@ import { map, startWith } from 'rxjs/operators';
 export class AutocompleteComponent implements OnInit {
 
   @Input() placeHolder: string;
-  @Input() options: T[];
-  @Input() selectedOption: T;
-  @Output() selectedOptionChange: EventEmitter<T>;
+  @Input() options: any[];
+  @Input() selectedOption: any;
+  @Output() selectedOptionChange: EventEmitter<any>;
 
-  @Input() displayWith: (option: T) => string;
-  @Input() displayOptionWith: (option: T) => string;
-  @Input() filter: (option: T, filterValue: string) => boolean;
+  @Input() displayWith: (option: any) => string;
+  @Input() displayOptionWith: (option: any) => string;
+  @Input() filter: (option: any, filterValue: string) => boolean;
 
   searchControl: FormControl;
-  $filteredOptions: Observable<T[]>;
+  $filteredOptions: Observable<any[]>;
 
   constructor() {
     this.searchControl = new FormControl();
-    this.selectedOptionChange = new EventEmitter<T>();
+    this.selectedOptionChange = new EventEmitter<any>();
   }
 
   ngOnInit() {
@@ -46,7 +47,7 @@ export class AutocompleteComponent implements OnInit {
     )
   }
 
-  private _filter(value: string): T[] {
+  private _filter(value: string): any[] {
     const filterValue = value.toLowerCase();
 
     if (this.options && this.options.length > 0){
