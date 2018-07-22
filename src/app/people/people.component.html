@@ -1,0 +1,11 @@
+<p>
+  <app-autocomplete
+    [options]="people"
+    [(selectedOption)]="person"
+    [displayWith]="displayPerson"
+    [displayOptionWith]="displayPerson"
+    [filter]="filterFn"
+    placeHolder="Select Person"
+    ></app-autocomplete>
+</p>
+<span>Selected value: {{person | json}}</span>

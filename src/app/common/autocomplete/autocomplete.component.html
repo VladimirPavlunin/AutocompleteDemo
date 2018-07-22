@@ -1,0 +1,17 @@
+<mat-form-field class="full-width">
+  <div class="input-container">
+    <input type="text" matInput placeholder="{{placeHolder}}" [formControl]="searchControl" [matAutocomplete]="auto">
+    <button mat-icon-button (click)="clearSelection($event)"><mat-icon>close</mat-icon></button>
+  </div>
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption
+                  [displayWith]="displayWith"
+                  (optionSelected)="onSelected($event)">
+  <mat-option *ngFor="let option of $filteredOptions | async" [value]="option">
+    {{ displayOptionWith(option) }}
+  </mat-option>
+  <mat-option [value]="null" *ngIf="($filteredOptions | async)?.length == 0">
+    No items found.
+  </mat-option>
+</mat-autocomplete>
