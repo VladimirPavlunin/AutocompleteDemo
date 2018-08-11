@@ -1,8 +1,9 @@
-<mat-form-field class="full-width">
+<mat-form-field class="full-width" appearance="outline">
   <div class="input-container">
     <input type="text" matInput placeholder="{{placeHolder}}" [formControl]="searchControl" [matAutocomplete]="auto">
     <button mat-icon-button (click)="clearSelection($event)"><mat-icon>close</mat-icon></button>
   </div>
+  <mat-error *ngIf="searchControl.errors && searchControl.errors.required">Field is required</mat-error>
 </mat-form-field>
 
 <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption

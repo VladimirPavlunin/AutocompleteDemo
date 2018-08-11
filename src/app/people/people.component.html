@@ -1,11 +1,12 @@
 <p>
   <app-autocomplete
+    [selectedOption]="person"
+    (selectedOptionChange)="onPersonSelected($event)"
     [options]="people"
-    [(selectedOption)]="person"
     [displayWith]="displayPerson"
     [displayOptionWith]="displayPerson"
     [filter]="filterFn"
     placeHolder="Select Person"
-    ></app-autocomplete>
+    [formControl]="selectedPerson"
+    [validator]="selectedPerson.validator"></app-autocomplete>
 </p>
-<span>Selected value: {{person | json}}</span>

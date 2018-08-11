@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR, ValidatorFn } from '@angular/forms';
 
 export interface IPerson {
   firstName: string;
@@ -10,15 +11,22 @@ export interface IPerson {
 @Component({
   selector: 'app-people',
   templateUrl: './people.component.html',
-  styleUrls: ['./people.component.css']
+  styleUrls: ['./people.component.css'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: PeopleComponent,
+    multi: true
+  }]
 })
 
-export class PeopleComponent implements OnInit {
+export class PeopleComponent implements OnInit, ControlValueAccessor {
+  @Input() validator: ValidatorFn;
   people: IPerson[];
-  person: IPerson;
+  selectedPerson: FormControl;
+  _onChange: (_: any) => void;
 
   constructor() {
-    this.person = null;
+    this.selectedPerson = new FormControl();
     this.people = [
       { firstName: 'Ivan', lastName: 'Petrov', age: 30, address: 'Zhlobin'},
       { firstName: 'Ivars', lastName: 'Foooo', age: 30, address: 'Zhlobin'},
@@ -27,6 +35,22 @@ export class PeopleComponent implements OnInit {
       { firstName: 'Simon', lastName: 'Wilson', age: 35, address: 'Manchester'},
       { firstName: 'Wilson', lastName: 'Alwaris', age: 32, address: 'London'}
     ]
+  }
+
+  writeValue(value) {
+    this.selectedPerson.setValue(value);
+  }
+
+  registerOnChange(fn: (_: any) => void): void {
+    this._onChange = fn;
+  }
+
+  registerOnTouched(fn) {
+  }
+
+  onPersonSelected(person: IPerson){
+    this.selectedPerson.setValue(person);
+    this._onChange(person);
   }
 
   private displayPerson(person?: IPerson): string | undefined {
@@ -39,5 +63,6 @@ export class PeopleComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.selectedPerson.setValidators(this.validator);
   }
 }
