@@ -1,15 +1,20 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div class="content">
+<div class="content" [formGroup]="form">
   <mat-form-field appearance="outline">
     <input matInput type="text" [formControl]="name" >
     <mat-error *ngIf="name.invalid">Field is required</mat-error>
   </mat-form-field>
 
   <div>
-    <app-people
-      placeHolder="Select Person"
-      [validator]="person.validator"
-      [formControl]="person">
+    <app-people #people>
+      <app-autocomplete
+        [options]="people.people"
+        [displayWith]="people.displayPerson"
+        [displayOptionWith]="people.displayPerson"
+        [filter]="people.filterFn"
+        placeHolder="Select Person">
+        <input type="text" #input [formControl]="person" matInput [matAutocomplete]="auto">
+      </app-autocomplete>
     </app-people>
   </div>
   Selected person {{ person.value | json }}

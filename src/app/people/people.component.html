@@ -1,12 +1,3 @@
 <p>
-  <app-autocomplete
-    [selectedOption]="person"
-    (selectedOptionChange)="onPersonSelected($event)"
-    [options]="people"
-    [displayWith]="displayPerson"
-    [displayOptionWith]="displayPerson"
-    [filter]="filterFn"
-    placeHolder="Select Person"
-    [formControl]="selectedPerson"
-    [validator]="selectedPerson.validator"></app-autocomplete>
+  <ng-content></ng-content>
 </p>
